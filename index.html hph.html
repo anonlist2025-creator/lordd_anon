@@ -5,37 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excursão Hopi Hari - ETOPS</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
             background-color: #0a0a0a;
             color: #ffffff;
+            line-height: 1.6;
+            padding: 15px;
+            max-width: 100%;
+            margin: 0 auto;
             background-image: url('https://i.imgur.com/your-image.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
-            line-height: 1.6;
         }
         
         .content-wrapper {
             background-color: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
-            padding: 30px;
+            padding: 20px;
             backdrop-filter: blur(8px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+            max-width: 800px;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #4CAF50;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: clamp(24px, 3vw, 28px);
             font-weight: bold;
             margin-bottom: 10px;
             color: #4CAF50;
@@ -45,42 +53,45 @@
         
         h1, h2 {
             color: #4CAF50;
+            font-size: clamp(20px, 2.5vw, 24px);
+            margin: 15px 0;
+        }
+        
+        p, li {
+            margin-bottom: 10px;
         }
         
         .participant-list {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             background-color: rgba(20, 20, 20, 0.7);
-            padding: 25px;
+            padding: 15px;
             border-radius: 10px;
             border: 1px solid #333;
         }
         
         .participant-item {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             padding: 10px;
             background-color: rgba(30, 30, 30, 0.7);
             border-radius: 8px;
             transition: all 0.3s ease;
-        }
-        
-        .participant-item:hover {
-            background-color: rgba(40, 40, 40, 0.7);
+            gap: 8px;
         }
         
         .participant-number {
-            width: 35px;
-            margin-right: 15px;
+            min-width: 30px;
             font-weight: bold;
             color: #4CAF50;
             font-size: 16px;
         }
         
         .name-input {
-            flex-grow: 1;
-            padding: 10px;
-            margin-right: 15px;
+            flex: 1;
+            min-width: 150px;
+            padding: 8px;
             border: 1px solid #444;
             border-radius: 6px;
             background-color: #222;
@@ -88,18 +99,9 @@
             font-size: 14px;
         }
         
-        .name-display {
-            flex-grow: 1;
-            margin-right: 15px;
-            padding: 8px;
-            color: #fff;
-            font-weight: bold;
-        }
-        
         .confirmation-input {
             width: 100px;
-            margin-right: 15px;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #444;
             border-radius: 6px;
             background-color: #222;
@@ -108,7 +110,7 @@
         }
         
         .confirmation-button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             cursor: pointer;
             background-color: #4CAF50;
             color: white;
@@ -116,6 +118,7 @@
             border-radius: 6px;
             font-weight: bold;
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
         
         .confirmation-button:hover {
@@ -125,21 +128,40 @@
         .confirmed {
             color: #4CAF50;
             font-weight: bold;
-            margin-left: 15px;
-            font-size: 16px;
+            font-size: 14px;
+            margin-left: auto;
+            display: none;
+        }
+        
+        .trip-info, .alert-box, .payment-info, .security-info {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
         }
         
         .trip-info {
             background-color: rgba(20, 20, 20, 0.7);
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid #333;
-            margin-bottom: 30px;
+        }
+        
+        .alert-box {
+            background-color: rgba(255, 152, 0, 0.2);
+            border-left: 4px solid #FF9800;
+        }
+        
+        .payment-info {
+            background-color: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .security-info {
+            background-color: rgba(33, 150, 243, 0.2);
+            border-left: 4px solid #2196F3;
         }
         
         .discord-link {
-            margin: 25px auto;
-            padding: 15px;
+            margin: 20px auto;
+            padding: 12px;
             background-color: #7289DA;
             color: white;
             text-align: center;
@@ -147,7 +169,7 @@
             text-decoration: none;
             display: block;
             font-weight: bold;
-            font-size: 18px;
+            font-size: clamp(16px, 2vw, 18px);
             transition: all 0.3s;
             max-width: 500px;
         }
@@ -159,55 +181,42 @@
         }
         
         .emoji {
-            font-size: 1.3em;
+            font-size: 1.2em;
             margin: 0 3px;
-        }
-        
-        .highlight {
-            background-color: rgba(255, 235, 59, 0.3);
-            padding: 3px 6px;
-            border-radius: 4px;
-            color: #FFEB3B;
-            font-weight: bold;
-        }
-        
-        .alert-box {
-            background-color: rgba(255, 152, 0, 0.2);
-            border-left: 4px solid #FF9800;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .payment-info {
-            background-color: rgba(76, 175, 80, 0.2);
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .security-info {
-            background-color: rgba(33, 150, 243, 0.2);
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        input:disabled {
-            background-color: #333;
-            color: #999;
-            cursor: not-allowed;
         }
         
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 30px;
+            padding-top: 15px;
             border-top: 1px solid #333;
             color: #aaa;
-            font-size: 14px;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 600px) {
+            .content-wrapper {
+                padding: 15px;
+            }
+            
+            .participant-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .name-input, .confirmation-input {
+                width: 100%;
+            }
+            
+            .confirmation-button {
+                width: 100%;
+                margin-top: 5px;
+            }
+            
+            .confirmed {
+                margin-left: 0;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -223,9 +232,7 @@
             <h2>📋 Lista de Participantes</h2>
             <p>Preencha seu nome e o código de confirmação para garantir sua vaga:</p>
             
-            <div id="participants-container">
-                <!-- Lista de participantes será gerada aqui -->
-            </div>
+            <div id="participants-container"></div>
         </div>
 
         <div class="trip-info">
@@ -244,7 +251,6 @@
                 <li>📅 Data do passeio</li>
                 <li>💲 Valores e formas de pagamento</li>
             </ul>
-            <p>Tudo será atualizado regularmente para que você possa se programar!</p>
 
             <div class="payment-info">
                 <h2>💳 Sobre o pagamento</h2>
@@ -254,7 +260,6 @@
             <div class="security-info">
                 <h2>🔐 Segurança</h2>
                 <p>A agência vai cuidar de todo o transporte e da logística da viagem, desde nosso embarque até o retorno. O local e horário exatos serão divulgados com antecedência para que ninguém fique perdido.</p>
-                <p>Tudo pensado para garantir um passeio seguro e bem organizado!</p>
             </div>
 
             <h2>📢 Importante!</h2>
@@ -276,7 +281,23 @@
     </div>
 
     <script>
-        // Gerar lista de 60 participantes
+        // Lista completa de 60 códigos válidos (6 dígitos cada)
+        const validCodes = [
+            '211234', '845621', '390157', '726489', '153024', 
+            '987532', '642813', '459076', '304598', '567321',
+            '892645', '135790', '678452', '923187', '246801',
+            '580236', '714953', '329604', '465812', '908173',
+            '257934', '631405', '842619', '375028', '596142',
+            '120987', '754302', '983516', '208465', '537291',
+            '619843', '372058', '504726', '861479', '295384',
+            '430917', '748562', '913205', '624738', '357920',
+            '482651', '809314', '146825', '573098', '921467',
+            '638250', '704193', '259476', '386529', '512874',
+            '647901', '830215', '964782', '201356', '579463',
+            '312045', '428697', '753160', '695324', '840251'
+        ];
+
+        // Gerar lista de 60 participantes VAZIA
         const participantsContainer = document.getElementById('participants-container');
         
         for (let i = 1; i <= 60; i++) {
@@ -287,7 +308,7 @@
                 <input type="text" class="name-input" placeholder="Seu nome completo">
                 <input type="text" class="confirmation-input" placeholder="Código" maxlength="6" disabled>
                 <button class="confirmation-button" disabled>Confirmar</button>
-                <span class="confirmed" style="display:none;">✓ Confirmado</span>
+                <span class="confirmed">✓ Confirmado</span>
             `;
             participantsContainer.appendChild(participantDiv);
         }
@@ -309,7 +330,7 @@
             });
         });
 
-        // Adicionar eventos aos botões de confirmação
+        // Validar código ao clicar no botão
         document.querySelectorAll('.confirmation-button').forEach(button => {
             button.addEventListener('click', function() {
                 const participantItem = this.closest('.participant-item');
@@ -317,26 +338,15 @@
                 const codeInput = participantItem.querySelector('.confirmation-input');
                 const confirmedSpan = participantItem.querySelector('.confirmed');
                 
-                if (codeInput.value === '211234') {
-                    // Travar todos os campos
+                if (validCodes.includes(codeInput.value)) {
                     nameInput.disabled = true;
                     codeInput.disabled = true;
                     this.disabled = true;
-                    
-                    // Mostrar confirmação
                     confirmedSpan.style.display = 'inline';
-                    
-                    // Substituir input por texto
-                    const nameDisplay = document.createElement('div');
-                    nameDisplay.className = 'name-display';
-                    nameDisplay.textContent = nameInput.value;
-                    nameInput.replaceWith(nameDisplay);
-                    
-                    // Feedback visual
                     participantItem.style.backgroundColor = 'rgba(76, 175, 80, 0.2)';
                     participantItem.style.borderLeft = '4px solid #4CAF50';
                 } else {
-                    alert('Código incorreto! O código de confirmação será fornecido no Discord.');
+                    alert('Código incorreto! Verifique o código fornecido no Discord.');
                 }
             });
         });
